@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вперёд, чемпионка! ♟️</title>
+  <meta name="description" content="Сайт-поддержка для шахматной олимпиады. Удачи на разряд!">
+  <meta property="og:title" content="Вперёд, чемпионка! ♟️">
+  <meta property="og:description" content="Мы верим в тебя. Удачи на олимпиаде!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://dummyimage.com/1200x630/000/fff&text=%E2%99%9E+Good+Luck+%E2%99%9D">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0d10;
+      --fg:#e8eef8;
+      --muted:#a9b3c5;
+      --primary:#7cf6b7;
+      --accent:#86a8ff;
+      --pink:#ff7cc5;
+      --tile:#12151b;
+      --tile2:#0f1217;
+      --glass: rgba(255,255,255,.06);
+      --border: 1px solid rgba(255,255,255,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--fg);
+      background: radial-gradient(1200px 800px at 10% -10%, #1b2030 0%, #0b0d10 60%) no-repeat fixed;
+      overflow-x:hidden;
+    }
+
+    /* animated chessboard background */
+    .board-bg{
+      position:fixed; inset:0; z-index:-1; opacity:.18;
+      background:
+        linear-gradient(45deg, var(--tile) 25%, transparent 25%) -20px 0/40px 40px,
+        linear-gradient(-45deg, var(--tile) 25%, transparent 25%) -20px 0/40px 40px,
+        linear-gradient(45deg, transparent 75%, var(--tile) 75%) -20px 0/40px 40px,
+        linear-gradient(-45deg, transparent 75%, var(--tile) 75%) -20px 0/40px 40px,
+        linear-gradient(0deg, var(--tile2), var(--tile2));
+      animation: drift 18s linear infinite;
+    }
+    @keyframes drift{
+      0%{background-position:-20px 0, -20px 0, -20px 0, -20px 0, 0 0}
+      100%{background-position:20px 40px, 20px 40px, 20px 40px, 20px 40px, 0 0}
+    }
+
+    header{
+      padding: clamp(18px, 3vw, 28px);
+      display:flex; justify-content:space-between; align-items:center;
+      max-width:1200px; margin:0 auto;
+    }
+    .brand{
+      display:flex; gap:14px; align-items:center; font-weight:900; letter-spacing:.5px;
+      font-family: Montserrat, Inter, sans-serif;
+    }
+    .brand svg{width:30px; height:30px; filter: drop-shadow(0 4px 10px rgba(124,246,183,.3))}
+    .badge{
+      border:var(--border); padding:6px 10px; border-radius:999px; color:var(--muted);
+      background:var(--glass); font-size:12px;
+    }
+
+    .hero{
+      max-width:1200px; margin: 20px auto 0; padding: clamp(20px, 4vw, 40px);
+      display:grid; gap:22px;
+    }
+    .hero-card{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      background: linear-gradient(140deg, rgba(134,168,255,.14), rgba(124,246,183,.10));
+      border:var(--border); box-shadow:var(--shadow);
+      padding: clamp(24px, 4vw, 44px);
+    }
+    .hero h1{
+      margin:6px 0 10px; line-height:1.05;
+      font-size: clamp(28px, 5.6vw, 64px);
+      font-family: Montserrat, Inter, sans-serif;
+      letter-spacing:.4px;
+    }
+    .gradient{
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--pink));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .sub{
+      color:var(--muted); font-size: clamp(14px, 1.7vw, 18px);
+    }
+    .cta-row{
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;
+    }
+    .btn{
+      padding:12px 16px; border-radius:12px; border:var(--border); cursor:pointer;
+      background:var(--glass); color:var(--fg); font-weight:600; backdrop-filter: blur(8px);
+      transition:.2s transform, .2s background;
+    }
+    .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.10); }
+    .btn.primary{ background: linear-gradient(90deg, rgba(124,246,183,.2), rgba(134,168,255,.2)); border-color: transparent; }
+    .meta{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:10px; color:var(--muted);
+      font-size:14px;
+    }
+    .meta strong{color:var(--fg)}
+
+    .grid{
+      display:grid; gap:16px; grid-template-columns: repeat(12, 1fr);
+      max-width:1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,40px) clamp(40px,6vw,80px);
+    }
+    .card{
+      grid-column: span 12; border-radius:var(--radius); border:var(--border); background:var(--glass); padding:18px 18px 22px;
+    }
+    .card h3{margin:6px 0 6px; font-family: Montserrat, Inter, sans-serif;}
+    .card p{margin:0; color:var(--muted)}
+    .card.big{ grid-column: span 7 }
+    .card.small{ grid-column: span 5 }
+    @media (max-width: 900px){
+      .card.big,.card.small{ grid-column: span 12; }
+    }
+
+    /* message wall */
+    .wall{
+      display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:12px; margin-top:12px;
+    }
+    .note{
+      border-radius:14px; padding:12px; background: rgba(255,255,255,.06); border:var(--border); min-height:86px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .note .who{ font-weight:600 }
+    .note .txt{ color:var(--fg) }
+
+    /* countdown */
+    .countdown{
+      display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;
+    }
+    .timebox{
+      min-width:86px; text-align:center; padding:12px 10px; border-radius:12px; background: rgba(255,255,255,.08);
+      border:var(--border);
+    }
+    .num{ font-size:26px; font-weight:900; font-family: Montserrat, Inter, sans-serif; }
+    .lbl{ font-size:12px; color:var(--muted) }
+
+    /* canvas fireworks */
+    canvas#fx{ position:fixed; inset:0; pointer-events:none; z-index:5 }
+
+    footer{
+      color:var(--muted); text-align:center; padding: 40px 20px 80px;
+    }
+
+    /* floating corner piece */
+    .float-piece{
+      position:absolute; right:-40px; top:-40px; width:160px; height:160px; opacity:.18;
+      transform: rotate(-14deg);
+    }
+
+    /* toast */
+    .toast{
+      position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px; z-index: 10;
+      background: rgba(0,0,0,.7); border: var(--border); color: var(--fg); padding: 10px 14px; border-radius: 10px;
+      backdrop-filter: blur(6px); display:none;
+    }
+  </style>
+</head>
+<body>
+  <div class="board-bg"></div>
+  <canvas id="fx"></canvas>
+
+  <header>
+    <div class="brand">
+      <!-- Knight icon -->
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path fill="url(#g)" d="M15 50h34v6H15zM20 46c0-10 8-16 20-18 0 0-4-4-4-8s4-8 10-8c0 0-2 6 4 10 3 2 6 6 6 12 0 12-12 20-24 20H20zM10 46c0-6 2-10 6-12 0 0-2-4-2-8s2-8 6-8c0 0-2 6 2 10 2 2 4 6 4 12 0 6-6 14-10 14H10z"/>
+        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7cf6b7"/><stop offset="1" stop-color="#86a8ff"/></linearGradient></defs>
+      </svg>
+      <span>Good Luck</span>
+    </div>
+    <span class="badge">♟ Олимпиада • 1 разряд</span>
+  </header>
+
+  <main class="hero">
+    <section class="hero-card">
+      <img class="float-piece" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23ffffff' fill-opacity='0.8' d='M20 54h24v6H20zM24 50c0-9 7-15 18-17 0 0-4-4-4-8s4-8 10-8c0 0-2 6 4 10 3 2 6 6 6 12 0 11-11 20-22 20H24z'/></svg>" alt="">
+      <h1><span class="gradient" id="name">[Имя]</span>, Я верю в тебя! </h1>
+      <p class="sub">Завтра ты берёшь 1 разряд. Спокойно, точно, красиво — как мат в три хода.</p>
+
+      <div class="meta">
+        <span>Старт: <strong id="startTime">16 августа, 09:00</strong></span>
+        <span>Локация: <strong>Олимпиада по шахматам</strong></span>
+      </div>
+
+      <div class="countdown" id="countdown">
+        <div class="timebox"><div class="num" id="d">–</div><div class="lbl">дней</div></div>
+        <div class="timebox"><div class="num" id="h">–</div><div class="lbl">часов</div></div>
+        <div class="timebox"><div class="num" id="m">–</div><div class="lbl">минут</div></div>
+        <div class="timebox"><div class="num" id="s">–</div><div class="lbl">секунд</div></div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn primary" id="btnFire">НАЖМИ ХОТЬ КУДА</button>
+        <button class="btn" id="btnName">Удачиии</button>
+        <button class="btn" id="btnWish">Спокойной Ночи</button>
+      </div>
+    </section>
+  </main>
+
+  <section class="grid">
+    <div class="card big">
+      <h3>Мои пожелания</h3>
+      <div class="wall" id="wall">
+        <!-- пожелания будут появляться здесь -->
+      </div>
+    </div>
+
+    <div class="card small">
+      <h3>3 хита для уверенности</h3>
+      <p>• Время есть — дышим. <br>• Любая позиция решается — ищем план. <br>• Ты готова — просто играй свою игру.</p>
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+        <span class="badge">♜ Спокойствие</span>
+        <span class="badge">♞ Точность</span>
+        <span class="badge">♛ Красота</span>
+      </div>
+    </div>
+
+    <div class="card small">
+      <h3>Мини‑медитация перед партией</h3>
+      <p>Закрой глаза на 30 сек. Сделай 4 медленных вдоха и выдоха. Представь чёткий план на первые 10 ходов. Открой глаза и улыбайся.</p>
+    </div>
+  </section>
+
+  <footer>
+    Сделано с любовью и верой в победу. <span style="color:var(--primary)">GLHF ♟</span>
+  </footer>
+
+  <div class="toast" id="toast">Скопировано!</div>
+
+  <script>
+    // === SETTINGS YOU CAN EDIT QUICKLY ===
+    // Завтра 09:00 по местному времени
+    const now = new Date();
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 9, 0, 0); // завтра 09:00
+    const startText = target.toLocaleDateString('ru-RU', { day:'numeric', month:'long'}) + ', ' + target.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('startTime').textContent = startText;
+
+    // Имя по умолчанию
+    const storedName = localStorage.getItem('gl_name') || '';
+    if(storedName) document.getElementById('name').textContent = storedName;
+
+    // === Countdown ===
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function tick(){
+      const t = target - new Date();
+      if(t <= 0){ document.querySelector('.sub').textContent = 'Поехали! Время показать мастер‑класс.'; return; }
+      const d = Math.floor(t/86400000);
+      const h = Math.floor((t%86400000)/3600000);
+      const m = Math.floor((t%3600000)/60000);
+      const s = Math.floor((t%60000)/1000);
+      document.getElementById('d').textContent = d;
+      document.getElementById('h').textContent = pad(h);
+      document.getElementById('m').textContent = pad(m);
+      document.getElementById('s').textContent = pad(s);
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // === Simple confetti from chess pieces ===
+    const canvas = document.getElementById('fx');
+    const ctx = canvas.getContext('2d');
+    let pieces = [];
+    const glyphs = ['♔','♕','♖','♗','♘','♙','♚','♛','♜','♝','♞','♟'];
+
+    function resize(){ canvas.width = innerWidth * devicePixelRatio; canvas.height = innerHeight * devicePixelRatio; }
+    addEventListener('resize', resize); resize();
+
+    function spawn(x, y, burst=60){
+      for(let i=0;i<burst;i++){
+        pieces.push({
+          x:(x||Math.random()*canvas.width), y:(y||Math.random()*canvas.height),
+          vx:(Math.random()-0.5)*6*devicePixelRatio,
+          vy:(Math.random()-1.2)*7*devicePixelRatio,
+          g: 0.18*devicePixelRatio,
+          a: 1,
+          s: (Math.random()*22 + 14)*devicePixelRatio,
+          r: Math.random()*Math.PI,
+          t: glyphs[Math.random()*glyphs.length|0],
+          c: Math.random()<.5 ? '#7cf6b7' : (Math.random()<.5 ? '#86a8ff' : '#ff7cc5')
+        });
+      }
+    }
+
+    function loop(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=pieces.length-1;i>=0;i--){
+        const p = pieces[i];
+        p.vy += p.g; p.x += p.vx; p.y += p.vy; p.r += 0.02; p.a -= 0.008;
+        if(p.a <= 0 || p.y > canvas.height+40){ pieces.splice(i,1); continue; }
+        ctx.save();
+        ctx.globalAlpha = Math.max(0,p.a);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.r);
+        ctx.font = p.s+'px "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
+        ctx.fillStyle = p.c;
+        ctx.fillText(p.t, 0, 0);
+        ctx.restore();
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Fire button
+    document.getElementById('btnFire').addEventListener('click', e=>{
+      spawn(canvas.width/2, canvas.height*.3, 120);
+    });
+    // Click Anywhere to spawn
+    addEventListener('click', e=>{
+      // avoid spawning when clicking buttons excessively
+      if(e.target.classList && e.target.classList.contains('btn')) return;
+      const x = e.clientX * devicePixelRatio, y = e.clientY * devicePixelRatio;
+      spawn(x,y,80);
+    });
+
+    // Set name
+    document.getElementById('btnName').addEventListener('click', ()=>{
+      const name = prompt('Введите имя (например: Алия):', localStorage.getItem('gl_name') || '');
+      if(name && name.trim()){
+        localStorage.setItem('gl_name', name.trim());
+        document.getElementById('name').textContent = name.trim();
+        toast('Имя обновлено');
+      }
+    });
+
+    // Wishes
+    const wall = document.getElementById('wall');
+    const wishes = JSON.parse(localStorage.getItem('gl_wishes') || '[]');
+    function renderWishes(){
+      wall.innerHTML = '';
+      wishes.slice().reverse().forEach(w=>{
+        const div = document.createElement('div');
+        div.className = 'note';
+        div.innerHTML = `<div class="who">💬 ${escapeHtml(w.from||'Друг')}</div><div class="txt">${escapeHtml(w.text)}</div>`;
+        wall.appendChild(div);
+      });
+    }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])) }
+    renderWishes();
+
+    document.getElementById('btnWish').addEventListener('click', ()=>{
+      const from = prompt('Кто отправляет? (необязательно)') || 'Друг';
+      const text = prompt('Тёплое пожелание:');
+      if(text && text.trim()){
+        wishes.push({from, text: text.trim()});
+        localStorage.setItem('gl_wishes', JSON.stringify(wishes));
+        renderWishes();
+        toast('Пожелание добавлено');
+        spawn(canvas.width/2, canvas.height*.25, 80);
+      }
+    });
+
+    // Share
+    document.getElementById('btnShare').addEventListener('click', async ()=>{
+      const title = 'Вперёд, чемпионка! ♟️';
+      const text = 'Пожелаем удачи на олимпиаде по шахматам!';
+      const url = location.href;
+      if(navigator.share){
+        try{ await navigator.share({title, text, url}); }catch(e){}
+      }else{
+        await navigator.clipboard.writeText(url);
+        toast('Ссылка скопирована');
+      }
+    });
+
+    // Toast
+    function toast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.style.display='block';
+      setTimeout(()=>t.style.display='none', 1600);
+    }
+  </script>
+</body>
+</html>
